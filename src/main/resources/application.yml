@@ -1,0 +1,14 @@
+server:
+  port: 8999
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  web:
+    resources:
+      static-locations: file:./static/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  profiles:
+    active: test
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  #mapper-locations: file:./mapper/**/*.xml

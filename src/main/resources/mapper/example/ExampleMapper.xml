@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.base.example.mapper.ExampleMapper">
+    <!-- test -->
+    <select id="datasourceQuery" resultType="java.lang.String">
+        SELECT
+            name
+        FROM
+            srit_alarm.hk_camera
+        WHERE
+            cameraIndexCode = #{cameraIndexCode}
+    </select>
+    <select id="datasourceQueryList" resultType="com.base.example.model.entity.HkCamera">
+        SELECT
+            *
+        FROM
+            srit_alarm.hk_camera
+    </select>
+</mapper>
