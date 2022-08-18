@@ -8,8 +8,11 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.base.common.constant.enums.ReturnEnums;
 import com.base.common.exception.BusinessException;
+import com.base.common.service.intf.CommonService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -22,7 +25,14 @@ import java.util.Map;
  * @since 1.0
  */
 @Slf4j
+@Component
 public class HttpUtils extends HttpUtil{
+
+	static CommonService commonService;
+	@Resource
+	public void setHkCommonMapper(CommonService commonService) {
+		HttpUtils.commonService = commonService;
+	}
 
 	/**
 	 * GET数据
@@ -83,7 +93,7 @@ public class HttpUtils extends HttpUtil{
 	 * @param isPost 是否POST请求：true-POST；false-GET
 	 * @return
 	 */
-	public static JSONObject requestData(String url, Map<String, Object> paramsMap, Map<String, String> headerMap, boolean isPost) {
+	private static JSONObject requestData(String url, Map<String, Object> paramsMap, Map<String, String> headerMap, boolean isPost) {
 		if (StrUtil.isBlank(url)) {
 			throw new BusinessException(ReturnEnums.HTTP_URL_NULL_ERROR);
 		}
@@ -110,7 +120,10 @@ public class HttpUtils extends HttpUtil{
 								   .body(body)
 								   .execute()
 								   .body();
-		log.info("\n通过《"+ mode +"》方式调用接口《{}》，\n入参是：\n{}\n返回数据是：{}", url, body, result);
+		// 日志打印和存储
+		String header = JSONObject.toJSONString(headerMap);
+		log.info("\n通过《"+ mode +"》方式调用接口《{}》，\n请求头是：\n{}\n入参信息是：\n{}\n返回数据是：{}", url, header, body, result);
+		commonService.saveLog(url, header, body, result);
 
 		if (StrUtil.isBlank(result)) {
 			return new JSONObject();

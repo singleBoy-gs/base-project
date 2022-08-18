@@ -1,10 +1,10 @@
 package com.base.example.service.impl;
 
-import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.base.common.model.dto.PageDTO;
 import com.base.common.response.R;
+import com.base.common.utils.HttpUtils;
 import com.base.example.mapper.ExampleMapper;
-import com.base.example.model.entity.HkCamera;
 import com.base.example.service.intf.ExampleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,24 +28,21 @@ public class ExampleServiceImpl implements ExampleService {
 	ExampleMapper exampleMapper;
 
 	@Override
-	public String datasourceQuery(String cameraIndexCode) {
+	public R datasourceQuery(Integer id) {
 
-		if (StrUtil.isBlank(cameraIndexCode)) {
-			cameraIndexCode = "27bf11d3827b47a2b4a381004d994ad7";
+		HttpUtils.getData("http://127.0.0.1:8999/example/singleParamGet?name=张三");
+
+		JSONObject result = exampleMapper.datasourceQuery(id);
+		if (result==null) {
+			result = new JSONObject();
 		}
-		String test = null;
-		try {
-			test = exampleMapper.datasourceQuery(cameraIndexCode);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return test;
+		return R.success(result);
 	}
 
 	@Override
 	public R datasourceQueryList(PageDTO pageDTO) {
 		PageHelper.startPage(pageDTO.getPageNum(), pageDTO.getPageSize());
-		List<HkCamera> cameraList = exampleMapper.datasourceQueryList();
+		List<JSONObject> cameraList = exampleMapper.datasourceQueryList();
 		PageInfo pageInfo = new PageInfo(cameraList);
 		return R.success(pageInfo);
 	}

@@ -11,7 +11,17 @@ import com.base.common.response.R;
  */
 public interface ExampleService {
 
-	String datasourceQuery(String cameraIndexCode);
+	/**
+	 * 数据库查询
+	 * @param id
+	 * @return
+	 */
+	R datasourceQuery(Integer id);
 
+	/**
+	 * 数据库查询
+	 * @param pageDTO
+	 * @return
+	 */
 	R datasourceQueryList(PageDTO pageDTO);
 }

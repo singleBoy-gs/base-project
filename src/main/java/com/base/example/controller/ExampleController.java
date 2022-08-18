@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Single Minded
@@ -71,16 +72,14 @@ public class ExampleController {
 	@GetMapping("/datasourceQuery")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "数据库查询", notes = "数据库查询")
-	@ApiImplicitParam(name = "cameraIndexCode",value = "摄像机编码",example = "27bf11d3827b47a2b4a381004d994ad7",paramType = "query",required = true)
-	public R datasourceQuery(String cameraIndexCode){
-		String name = exampleService.datasourceQuery(cameraIndexCode);
-		return R.success(name);
+	@ApiImplicitParam(name = "id",value = "唯一标识",example = "1",paramType = "query",required = true)
+	public R datasourceQuery(@NotNull(message = "唯一标识不能为空") Integer id){
+		return exampleService.datasourceQuery(id);
 	}
 
 	@GetMapping("/datasourceQueryList")
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "数据库查询", notes = "数据库查询")
-	@ApiImplicitParam(name = "cameraIndexCode",value = "摄像机编码",example = "27bf11d3827b47a2b4a381004d994ad7",paramType = "query",required = true)
 	public R datasourceQueryList(PageDTO pageDTO){
 		return exampleService.datasourceQueryList(pageDTO);
 	}

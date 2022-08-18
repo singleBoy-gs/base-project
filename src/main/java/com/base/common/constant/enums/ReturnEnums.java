@@ -20,7 +20,11 @@ public enum ReturnEnums {
 	DEFAULT_ERROR(500, "失败"),
 
 	HTTP_URL_NULL_ERROR(1001, "URL不能为空"),
-	HTTP_NAME_NULL_ERROR(1002, "文件名不能为空"),
+	HTTP_RESULT_NULL_ERROR(1002, "接口返回结果为空"),
+	HTTP_NAME_NULL_ERROR(1003, "文件名不能为空"),
+
+
+	BUSINESS_ERROR(9999, "业务错误"),
 	;
 
 	private int code;   // 编码

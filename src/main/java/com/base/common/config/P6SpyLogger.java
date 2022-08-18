@@ -8,7 +8,7 @@ public class P6SpyLogger extends FileLogger {
 
 	@Override
 	public void logText(String text) {
-		super.logText(text);
+		//super.logText(text);
 		log.info(text);
 	}
 }

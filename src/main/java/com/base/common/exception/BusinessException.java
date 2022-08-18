@@ -14,6 +14,11 @@ public class BusinessException extends RuntimeException{
 
 	private int code;
 
+	public BusinessException(String msg) {
+		super(msg);
+		this.code = ReturnEnums.BUSINESS_ERROR.getCode();
+	}
+
 	public BusinessException(ReturnEnums returnEnums) {
 		super(returnEnums.getMsg());
 		this.code = returnEnums.getCode();
@@ -23,5 +28,4 @@ public class BusinessException extends RuntimeException{
 	public Throwable fillInStackTrace() {
 		return this;
 	}
-
 }
