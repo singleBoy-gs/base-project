@@ -30,7 +30,7 @@ public class HttpUtils extends HttpUtil{
 
 	static CommonService commonService;
 	@Resource
-	public void setHkCommonMapper(CommonService commonService) {
+	public void setCommonService(CommonService commonService) {
 		HttpUtils.commonService = commonService;
 	}
 
