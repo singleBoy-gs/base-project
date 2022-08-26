@@ -46,15 +46,15 @@ public class R<T> implements Serializable {
 	}
 
 	public static <T> R<T> error(){
-		return error(null);
+		return error("");
 	}
 
-	public static <T> R<T> error(T data){
-		return error(ReturnEnums.DEFAULT_ERROR, data);
+	public static <T> R<T> error(String msg){
+		return getR(ReturnEnums.DEFAULT_ERROR.getCode(), msg, null);
 	}
 
-	public static <T> R<T> error(ReturnEnums returnEnums, T data){
-		return getR(returnEnums, data);
+	public static <T> R<T> error(ReturnEnums returnEnums){
+		return getR(returnEnums, null);
 	}
 
 	private static <T>R<T> getR(ReturnEnums returnEnums, T data) {
