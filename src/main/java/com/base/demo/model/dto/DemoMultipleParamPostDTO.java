@@ -1,4 +1,4 @@
-package com.base.example.model.dto;
+package com.base.demo.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
  * @since 1.0
  */
 @Data
-public class ExampleMultipleParamPostDTO {
+public class DemoMultipleParamPostDTO {
 
 	@ApiModelProperty(value = "时间", required = true)
 	@NotBlank(message = "编码不能为空")

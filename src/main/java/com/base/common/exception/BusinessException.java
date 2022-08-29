@@ -19,6 +19,11 @@ public class BusinessException extends RuntimeException{
 		this.code = ReturnEnums.BUSINESS_ERROR.getCode();
 	}
 
+	public BusinessException(int code, String msg) {
+		super(msg);
+		this.code = code;
+	}
+
 	public BusinessException(ReturnEnums returnEnums) {
 		super(returnEnums.getMsg());
 		this.code = returnEnums.getCode();

@@ -22,13 +22,15 @@ public enum ReturnEnums {
 	HTTP_URL_NULL_ERROR(1001, "URL不能为空"),
 	HTTP_RESULT_NULL_ERROR(1002, "接口返回结果为空"),
 	HTTP_NAME_NULL_ERROR(1003, "文件名不能为空"),
+	HTTP_KEY_NULL_ERROR(1004, "KEY不能为空"),
 
 
 	BUSINESS_ERROR(9999, "业务错误"),
 	;
-
-	private int code;   // 编码
-	private String msg; // 描述
+	// 编码
+	private int code;
+	// 描述
+	private String msg;
 
 	ReturnEnums(int code, String msg){
 		this.code = code;

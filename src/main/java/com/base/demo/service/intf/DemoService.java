@@ -1,4 +1,4 @@
-package com.base.example.service.intf;
+package com.base.demo.service.intf;
 
 import com.base.common.model.dto.PageDTO;
 import com.base.common.response.R;
@@ -9,7 +9,7 @@ import com.base.common.response.R;
  * @Description
  * @since 1.0
  */
-public interface ExampleService {
+public interface DemoService {
 
 	/**
 	 * 数据库查询
@@ -24,4 +24,10 @@ public interface ExampleService {
 	 * @return
 	 */
 	R datasourceQueryList(PageDTO pageDTO);
+
+	/**
+	 * 定时任务执行内容
+	 * @return
+	 */
+	R task();
 }

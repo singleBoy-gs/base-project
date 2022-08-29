@@ -1,7 +1,10 @@
 package com.base.common.mapper;
 
+import com.base.common.model.entity.TDayOff;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author Single Minded
@@ -23,4 +26,10 @@ public interface CommonMapper {
 				 @Param("header") String header,
 				 @Param("param") String param,
 				 @Param("result") String result);
+
+	/**
+	 * 保存日期
+	 * @param dataList
+	 */
+	void saveDayOffDate(@Param("dataList") List<TDayOff> dataList);
 }

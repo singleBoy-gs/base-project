@@ -29,7 +29,7 @@ public class SwaggerConfig {
 				.groupName("示例")
 				.enable(true)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.base.example"))
+				.apis(RequestHandlerSelectors.basePackage("com.base.demo"))
 				.paths(PathSelectors.any())
 				.build();
 	}

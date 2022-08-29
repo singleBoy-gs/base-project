@@ -1,11 +1,11 @@
-package com.base.example.service.impl;
+package com.base.demo.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.base.common.model.dto.PageDTO;
 import com.base.common.response.R;
 import com.base.common.utils.HttpUtils;
-import com.base.example.mapper.ExampleMapper;
-import com.base.example.service.intf.ExampleService;
+import com.base.demo.mapper.DemoMapper;
+import com.base.demo.service.intf.DemoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -22,17 +22,17 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class ExampleServiceImpl implements ExampleService {
+public class DemoServiceImpl implements DemoService {
 
 	@Resource
-	ExampleMapper exampleMapper;
+	DemoMapper demoMapper;
 
 	@Override
 	public R datasourceQuery(Integer id) {
 
-		HttpUtils.getData("http://127.0.0.1:8999/example/singleParamGet?name=张三");
+		HttpUtils.getData("http://127.0.0.1:6666/demo/singleParamGet?name=张三");
 
-		JSONObject result = exampleMapper.datasourceQuery(id);
+		JSONObject result = demoMapper.datasourceQuery(id);
 		if (result==null) {
 			result = new JSONObject();
 		}
@@ -42,8 +42,14 @@ public class ExampleServiceImpl implements ExampleService {
 	@Override
 	public R datasourceQueryList(PageDTO pageDTO) {
 		PageHelper.startPage(pageDTO.getPageNum(), pageDTO.getPageSize());
-		List<JSONObject> cameraList = exampleMapper.datasourceQueryList();
+		List<JSONObject> cameraList = demoMapper.datasourceQueryList();
 		PageInfo pageInfo = new PageInfo(cameraList);
 		return R.success(pageInfo);
+	}
+
+	@Override
+	public R task() {
+		log.info("定时任务执行了");
+		return R.success();
 	}
 }

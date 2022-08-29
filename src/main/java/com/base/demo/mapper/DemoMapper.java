@@ -1,4 +1,4 @@
-package com.base.example.mapper;
+package com.base.demo.mapper;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +13,7 @@ import java.util.List;
  * @since 1.0
  */
 @Mapper
-public interface ExampleMapper {
+public interface DemoMapper {
 
 	/**
 	 * 数据库查询
@@ -27,4 +27,10 @@ public interface ExampleMapper {
 	 * @return
 	 */
 	List<JSONObject> datasourceQueryList();
+
+	/**
+	 * 查询CRON表达式
+	 * @param id base_project.t_sys_cron表的ID值
+	 */
+	String selectCron(@Param("id") int id);
 }

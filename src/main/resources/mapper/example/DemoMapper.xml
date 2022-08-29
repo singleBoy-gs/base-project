@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.base.example.mapper.ExampleMapper">
+<mapper namespace="com.base.demo.mapper.DemoMapper">
     <!-- 数据库查询 -->
     <select id="datasourceQuery" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
@@ -16,5 +16,10 @@
             *
         FROM
             base_project.log_interface
+    </select>
+
+    <!-- 查询CRON表达式 -->
+    <select id="selectCron" resultType="java.lang.String">
+        SELECT cron FROM base_project.t_sys_cron WHERE id=#{id}
     </select>
 </mapper>

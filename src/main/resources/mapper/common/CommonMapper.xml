@@ -3,9 +3,19 @@
 <mapper namespace="com.base.common.mapper.CommonMapper">
     <!-- 存储请求接口日志 -->
     <insert id="saveLog">
-        INSERT INTO log_interface
+        INSERT INTO t_log_interface
             (url, header, param, result)
         VALUES
             (#{url}, #{header}, #{param}, #{result})
+    </insert>
+
+    <!-- 保存日期 -->
+    <insert id="saveDayOffDate">
+        INSERT INTO t_day_off
+            (day_off_date, day_off_type)
+        VALUES
+            <foreach collection="dataList" item="data" separator=",">
+                (#{data.dayOffDate}, #{data.dayOffType})
+            </foreach>
     </insert>
 </mapper>

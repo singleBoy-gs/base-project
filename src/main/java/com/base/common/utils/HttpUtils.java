@@ -2,7 +2,6 @@ package com.base.common.utils;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -27,6 +26,32 @@ import java.util.Map;
 @Slf4j
 @Component
 public class HttpUtils extends HttpUtil{
+
+	/**
+	 * POST {@code "POST"}
+	 */
+	public static final String POST = "POST";
+	/**
+	 * GET {@code "GET"}
+	 */
+	public static final String GET = "GET";
+	/**
+	 * 上传文件的key {@code "file"}
+	 */
+	public static final String FILE = "file";
+
+	/**
+	 * 返回编码的key {@code "code"}
+ 	 */
+	public static final String CODE = "code";
+	/**
+	 * 返回描述的key
+ 	 */
+	public static final String MSG = "msg";
+	/**
+	 * 返回信息的key
+	 */
+	public static final String DATA = "data";
 
 	static CommonService commonService;
 	@Resource
@@ -94,7 +119,7 @@ public class HttpUtils extends HttpUtil{
 	 * @return
 	 */
 	private static JSONObject requestData(String url, Map<String, Object> paramsMap, Map<String, String> headerMap, boolean isPost) {
-		if (StrUtil.isBlank(url)) {
+		if (StringUtils.isBlank(url)) {
 			throw new BusinessException(ReturnEnums.HTTP_URL_NULL_ERROR);
 		}
 
@@ -102,15 +127,15 @@ public class HttpUtils extends HttpUtil{
 		String body = null;
 		HttpRequest httpRequest;
 		if (isPost) {
-			mode = "POST";
+			mode = POST;
 			body = JSONObject.toJSONString(paramsMap);
 			httpRequest = createPost(url);
 		} else {
-			mode = "GET";
+			mode = GET;
 			if (MapUtil.isNotEmpty(paramsMap)) {
 				StringBuilder bodySb = new StringBuilder();
 				paramsMap.forEach((k, v)->{
-					bodySb.append("&").append(k).append("=").append(v);
+					bodySb.append(StringUtils.AMP).append(k).append(StringUtils.EQUAL).append(v);
 				});
 				body = bodySb.substring(1);
 			}
@@ -125,7 +150,7 @@ public class HttpUtils extends HttpUtil{
 		log.info("\n通过《"+ mode +"》方式调用接口《{}》，\n请求头是：\n{}\n入参信息是：\n{}\n返回数据是：{}", url, header, body, result);
 		commonService.saveLog(url, header, body, result);
 
-		if (StrUtil.isBlank(result)) {
+		if (StringUtils.isBlank(result)) {
 			return new JSONObject();
 		}
 
@@ -140,7 +165,7 @@ public class HttpUtils extends HttpUtil{
 	 * @return
 	 */
 	public static JSONObject postFile(String url, String fileUrl) {
-		return postFile(url, fileUrl, "");
+		return postFile(url, fileUrl, StringUtils.EMPTY);
 	}
 
 	/**
@@ -187,22 +212,22 @@ public class HttpUtils extends HttpUtil{
 	 * @return
 	 */
 	public static JSONObject postFile(String url, String fileUrl, String formKey, String fileName, Map<String, String> headerMap) {
-		if (StrUtil.isBlank(url)) {
+		if (StringUtils.isBlank(url)) {
 			throw new BusinessException(ReturnEnums.HTTP_URL_NULL_ERROR);
 		}
-		if (StrUtil.isBlank(fileUrl)) {
+		if (StringUtils.isBlank(fileUrl)) {
 			throw new BusinessException(ReturnEnums.HTTP_URL_NULL_ERROR);
 		}
-		if (StrUtil.isBlank(formKey)) {
-			formKey = "file";
+		if (StringUtils.isBlank(formKey)) {
+			formKey = FILE;
 		}
-		if (StrUtil.isBlank(fileName)) {
-			String[] fileUrlArray = fileUrl.split("/");
+		if (StringUtils.isBlank(fileName)) {
+			String[] fileUrlArray = fileUrl.split(StringUtils.SLASH);
 			if (ArrayUtil.isEmpty(fileUrlArray)) {
 				throw new BusinessException(ReturnEnums.HTTP_NAME_NULL_ERROR);
 			}
 			fileName = fileUrlArray[fileUrlArray.length-1];
-			if (!fileName.contains(".")) {
+			if (!fileName.contains(StringUtils.DOT)) {
 				throw new BusinessException(ReturnEnums.HTTP_NAME_NULL_ERROR);
 			}
 		}
@@ -212,7 +237,7 @@ public class HttpUtils extends HttpUtil{
 				.execute()
 				.body();
 
-		if (StrUtil.isBlank(result)) {
+		if (StringUtils.isBlank(result)) {
 			return new JSONObject();
 		}
 
@@ -227,7 +252,7 @@ public class HttpUtils extends HttpUtil{
 	 * @return
 	 */
 	public static String getIpAddr(HttpServletRequest request) {
-		String ipAddress = null;
+		String ipAddress;
 		try {
 			ipAddress = request.getHeader("x-forwarded-for");
 			if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
@@ -244,7 +269,7 @@ public class HttpUtils extends HttpUtil{
 			}
 			if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
 				ipAddress = request.getRemoteAddr();
-				if (ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")) {
+				if ("127.0.0.1".equals(ipAddress) || "0:0:0:0:0:0:0:1".equals(ipAddress)) {
 					// 根据网卡取本机配置的IP
 					InetAddress inet = null;
 					try {
@@ -256,14 +281,15 @@ public class HttpUtils extends HttpUtil{
 				}
 			}
 			// 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-			if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
+			// "***.***.***.***".length()
+			if (ipAddress != null && ipAddress.length() > 15) {
 				// = 15
-				if (ipAddress.indexOf(",") > 0) {
-					ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+				if (ipAddress.indexOf(StringUtils.COMMA) > 0) {
+					ipAddress = ipAddress.substring(0, ipAddress.indexOf(StringUtils.COMMA));
 				}
 			}
 		} catch (Exception e) {
-			ipAddress = "";
+			ipAddress = StringUtils.EMPTY;
 		}
 
 		return ipAddress;
