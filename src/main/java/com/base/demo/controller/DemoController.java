@@ -1,9 +1,9 @@
-package com.base.example.controller;
+package com.base.demo.controller;
 
 import com.base.common.model.dto.PageDTO;
 import com.base.common.response.R;
-import com.base.example.model.dto.ExampleMultipleParamPostDTO;
-import com.base.example.service.intf.ExampleService;
+import com.base.demo.model.dto.DemoMultipleParamPostDTO;
+import com.base.demo.service.intf.DemoService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -27,12 +27,12 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/example")
+@RequestMapping("/demo")
 @Api(value = "示例", tags = {"示例"})
-public class ExampleController {
+public class DemoController {
 
 	@Resource
-	ExampleService exampleService;
+	DemoService demoService;
 
 	@GetMapping("/singleParamGet")
 	@ApiOperationSupport(order = 1)
@@ -65,8 +65,8 @@ public class ExampleController {
 	@PostMapping("/multipleParamPost")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "多参数POST请求", notes = "多参数POST请求")
-	public R multipleParamPost(@RequestBody @Valid ExampleMultipleParamPostDTO exampleMultipleParamPostDTO){
-		return R.success("code：" + exampleMultipleParamPostDTO.getCode() + "；name：" + exampleMultipleParamPostDTO.getName());
+	public R multipleParamPost(@RequestBody @Valid DemoMultipleParamPostDTO demoMultipleParamPostDTO){
+		return R.success("code：" + demoMultipleParamPostDTO.getCode() + "；name：" + demoMultipleParamPostDTO.getName());
 	}
 
 	@GetMapping("/datasourceQuery")
@@ -74,13 +74,13 @@ public class ExampleController {
 	@ApiOperation(value = "数据库查询", notes = "数据库查询")
 	@ApiImplicitParam(name = "id",value = "唯一标识",example = "1",paramType = "query",required = true)
 	public R datasourceQuery(@NotNull(message = "唯一标识不能为空") Integer id){
-		return exampleService.datasourceQuery(id);
+		return demoService.datasourceQuery(id);
 	}
 
 	@GetMapping("/datasourceQueryList")
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "数据库查询", notes = "数据库查询")
 	public R datasourceQueryList(PageDTO pageDTO){
-		return exampleService.datasourceQueryList(pageDTO);
+		return demoService.datasourceQueryList(pageDTO);
 	}
 }
