@@ -27,6 +27,7 @@
 		<dynamic.datasource.spring.boot.starter.version>3.5.1</dynamic.datasource.spring.boot.starter.version>
 		<fastjson.version>1.2.76</fastjson.version>
 		<hutool.all.version>5.8.5</hutool.all.version>
+		<poi.ooxml.version>5.2.2</poi.ooxml.version>
 	</properties>
 
 	<dependencies>
@@ -68,7 +69,6 @@
 			<version>1.4.3</version>
 		</dependency>
 
-
 		<!-- 打印sql语句 -->
 		<dependency>
 			<groupId>p6spy</groupId>
@@ -99,10 +99,17 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<!-- hutool all -->
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
 			<version>${hutool.all.version}</version>
+		</dependency>
+		<!-- hutool操作excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.ooxml.version}</version>
 		</dependency>
 	</dependencies>
 
